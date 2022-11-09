@@ -1,0 +1,26 @@
+name: Release
+
+on:
+  schedule:
+    - cron: "0 0 */9 * *"
+  workflow_dispatch:
+
+jobs:
+  GetDictionary:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Get Data
+        run: |
+          svn export --force https://github.com/BYVoid/OpenCC/trunk/data/config config
+          svn export --force https://github.com/BYVoid/OpenCC/trunk/data/dictionary dictionary
+          svn export --force https://github.com/BYVoid/OpenCC/trunk/data/scheme scheme
+      - name: Commit
+        # if: ${{ env.build_state == 'fin' }}
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "`TZ=Asia/Shanghai date "+%Y-%m-%d %H:%M:%S"`" -m init
+          git push
