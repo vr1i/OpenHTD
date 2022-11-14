@@ -15,6 +15,7 @@ jobs:
         run: |
           svn export --force https://github.com/BYVoid/OpenCC/trunk/data/config config
           svn export --force https://github.com/BYVoid/OpenCC/trunk/data/dictionary dictionary
+          svn export --force https://github.com/yanyiwu/gojieba/trunk/dict dictionary
           svn export --force https://github.com/BYVoid/OpenCC/trunk/data/scheme scheme
       - name: Commit
         # if: ${{ env.build_state == 'fin' }}
